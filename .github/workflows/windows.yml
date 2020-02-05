@@ -53,4 +53,10 @@ jobs:
         run: |
           dzil run --no-build 'cpanm --installdeps .'
       - name: Run Tests
-        run: dzil test -v
+        run: |
+          dzil build
+          cd FFI-Platypus-1.09
+          perl Makefile.PL
+          gmake
+          gmake ffi-test
+          perl -Mblib t/01_use.t
